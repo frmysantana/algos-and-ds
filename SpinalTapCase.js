@@ -1,11 +1,5 @@
 /*Convert a string to spinal case. Spinal case is 
-all-lowercase-words-joined-by-dashes.
-spinalCase("This Is Spinal Tap")    -->"this-is-spinal-tap"
-spinalCase("thisIsSpinalTap")       -->"this-is-spinal-tap"
-spinalCase("The_Andy_Griffith_Show")-->"the-andy-griffith-show"
-spinalCase("Teletubbies say Eh-oh") -->"teletubbies-say-eh-oh"
-spinalCase("AllThe-small Things")   -->"all-the-small-things"
-*/
+all-lowercase-words-joined-by-dashes.*/
 
 function splitAtCaps(str) {
   var caps = new RegExp(/[A-Z]/, 'g');
@@ -17,18 +11,12 @@ function splitAtCaps(str) {
     if (capMatches.length === 1 && newStr.search(caps) === 0){
       return newStr;
     }
-    // Split at second capital letter, because the first capital letter is
-    // also the first letter.
-    else if (newStr.search(caps) === 0) {
-      for (var i = 1; i < capMatches.length; i++) {
-        newStr = newStr.replace(capMatches[i], ' ' + capMatches[i]);
-      }
-      return newStr.split(' ');
-    }
-    // Split at all capital letters
     else {
-      for (var i = 0; i < capMatches.length; i++) {
+      // If ternary is true, the first letter is capital and should thus be skipped.
+      var i = newStr.search(caps) === 0 ? 1 : 0;
+      while (i < capMatches.length) {
         newStr = newStr.replace(capMatches[i], ' ' + capMatches[i]);
+        i++;
       }
       return newStr.split(' ');
     }
@@ -40,8 +28,8 @@ function splitAtCaps(str) {
 
 function spinalCase(str) {
   // Split the string at all spaces, underscores and hyphens.
-  var nonCaps = new RegExp(/[\s\_\-]/, 'g');
-  var strArr = str.split(nonCaps);
+  // var nonCaps = new RegExp(/[\s\_\-]/, 'g');
+  var strArr = str.split(/[\s\_\-]/g);
 
   // For the resulting substrings, split at any capital letters
   for (var i = 0; i < strArr.length; i++) {
@@ -63,8 +51,13 @@ function spinalCase(str) {
   return spinalCase.join('');
 }
 
+// Test cases
 var testArr = ["This Is Spinal Tap","thisIsSpinalTap","The_Andy_Griffith_Show",
 				"Teletubbies say Eh-oh","AllThe-small Things"];
 
-// Run test cases.
-testArr.forEach(function(el) {console.log(spinalCase(el)); } );
+// The correct outcome of each test case
+var ansArr = ["this-is-spinal-tap","this-is-spinal-tap","the-andy-griffith-show",
+        "teletubbies-say-eh-oh","all-the-small-things"]
+
+// Run the tests
+testArr.forEach(function(el, i, arr) {console.log(spinalCase(el) === this[i]);}, ansArr);
