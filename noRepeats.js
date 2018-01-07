@@ -8,41 +8,60 @@ For example, aab should return 2 because it has 6 total permutations (aab, aab,
 aba, aba, baa, baa), but only 2 of them (aba and aba) don't have the same letter
 (in this case a) repeating.
 */
-function factorial(n) {
-    if (n % 1 === 0 && n >= 0) {
-        var fact = 1;
-        for (i = 1; i<= n; i++) {
-            fact*=i;
+
+function swap(i, j, arr) {
+  // Swaps the items of array arr at indeces i and j with eachother.
+  // e.g. swap(3, 1, [1, 2, 3, 4, 5, 6, 7]) => [1, 4, 3, 2, 5, 6, 7]
+
+  // Order the indeces
+  var first = (i<j)? i: j;
+  var second = (i<j)? j: i;
+  
+  var piece1 = arr.splice(first, 1);
+  var piece2 = arr.splice(second - 1, 1);
+  arr.splice(first, 0, piece2[0]);
+  arr.splice(second, 0, piece1[0]);
+
+  return arr;
+}
+
+function permString(num, strArr) {
+  // Implements Heap's algorithm to find all permutations of strArr.
+
+  var intArr = [], perms = [];
+  
+  for(var i=0; i < num; i++) {
+      intArr[i] = 0;
+  }
+  
+  perms.push(strArr.join(''));
+
+  var j = 0;
+  while (j < num) {
+      if (intArr[j] < j) {
+        if (j % 2 === 0) {
+            strArr = swap(0, j, strArr);
+        } else {
+            strArr = swap(intArr[j], j, strArr);
         }
-    } else {
-        return Error("Factorial error: " + n + " is not a non-negative integer.");
-    }
-    return fact;
+        perms.push(strArr.join(''));
+        intArr[j] += 1;
+        j = 0;
+      } else {
+          intArr[j] = 0;
+          j += 1;
+      }
+  }
+
+  return perms;
 }
 
 function permAlone(str) {
-    // Edge case where a string of 1 character is passed.
-    if (str.length === 1) {
-        return 1;
-    }
 
-    var uniquePerms = [], perms = factorial(str.length);
     var strArr = str.split(''), j = str.length;
     
-    // Find and store all of the permutations of str by swapping the last
-    // element with it's preceding element until it is at the beginning of the
-    // array (e.g. [1, 2, 3] => [1, 3, 2] => [3, 1, 2] => [3, 2, 1] => [2, 3, 1]
-    // => [2, 1, 3] => [1, 2, 3], thus giving all permutations). The initial order
-    // is not added, so there are no duplicates.
-    for (var i = 1; i <= perms; i++) {
-      var piece = strArr.splice( j - 2, 1);
-      strArr.splice( j - 1, 0, piece[0]); j--;
-      uniquePerms.push(strArr.join(''));
-      if (j === 1) { 
-        j = str.length;
-      }
-    }
-
+    var uniquePerms = permString(j, strArr);
+    
     // Filter the array's elements to exclude all elements that have repeating
     // consecutive letters.
     var noRepeats = uniquePerms.filter(function(el) {
@@ -58,7 +77,8 @@ function permAlone(str) {
     return noRepeats.length;
 }
 
-// Testing the function
+// Testing the Script.
+
 var testArr = ["aab", "aaa", "aabb", "abcdefa", "abfdefa", "zzzzzzzz", "a", 
     "aaab", "aaabb"];
 var ans = [2, 0, 8, 3600, 2640, 0, 1, 0, 12];
