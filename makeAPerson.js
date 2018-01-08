@@ -66,6 +66,3 @@ var Person = function(firstAndLast) {
       last = newLast;
     };
 };
-
-var bob = new Person('Bob Ross');
-bob.setFullName("Haskell Curry");
