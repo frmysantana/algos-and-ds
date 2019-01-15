@@ -1,0 +1,24 @@
+{
+  "name": "scripts",
+  "version": "1.0.0",
+  "description": "Code for algorithm challenges",
+  "main": "SpinalTapCase.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frmysantana/Scripts.git"
+  },
+  "author": "Fremy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/frmysantana/Scripts/issues"
+  },
+  "homepage": "https://github.com/frmysantana/Scripts#readme",
+  "devDependencies": {
+    "eslint": "^5.10.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0"
+  }
+}
