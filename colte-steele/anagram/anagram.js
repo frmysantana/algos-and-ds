@@ -44,3 +44,12 @@ function makeLetterMap(word) {
         return acc
     }, {})
 }
+
+// Tests
+console.log(isAnagram('', '')) // true
+console.log(isAnagram('aaz', 'zza')) // false
+console.log(isAnagram('anagram', 'nagaram')) // true
+console.log(isAnagram('rat', 'car')) // false
+console.log(isAnagram('awesome', 'awesom')) // false
+console.log(isAnagram('qwerty', 'qeywrt')) // true
+console.log(isAnagram('texttwisttime', 'timetwisttext')) // true
