@@ -10,14 +10,14 @@
 
 /**
  * First Attempt without going through the video.
- * Time: O(n) where n is the length of the longer string
- * Space: O(n) where n is the length of the longer string
+ * Time: O(n) where n is the length of either string
+ * Space: O(n) where n is the length of either string
  * 
  * @param {string} first 
  * @param {string} second 
  * @returns boolean
  */
-function isAnagram(first, second) {
+function validAnagram(first, second){
     // I will assume the strings don't have whitespace or numbers in them.
     if (typeof first !== "string" || typeof second !== "string" || first.length !== second.length) {
         return false
@@ -25,12 +25,11 @@ function isAnagram(first, second) {
 
     const firstWordLetterMap = makeLetterMap(first)
     const secondWordLetterMap = makeLetterMap(second)
-    const boolArr = Array(Object.keys(firstWordLetterMap).length)
-    for (key in firstWordLetterMap) {
-        boolArr.push(secondWordLetterMap[key] === firstWordLetterMap[key])
+    for (const key in firstWordLetterMap) {
+        if (secondWordLetterMap[key] !== firstWordLetterMap[key]) return false
     }
 
-    return boolArr.every(b => b)
+    return true
 }
 
 function makeLetterMap(word) {
