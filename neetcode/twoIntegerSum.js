@@ -63,3 +63,32 @@ class Solution {
         }, {})
     }
 }
+
+class Solution {
+    /**
+     * @param {number[]} nums
+     * @param {number} target
+     * @return {number[]}
+     */
+    /**
+        * - loop through nums and make complements hash map that has key of the complement to reach target and value is index of the original member of nums
+        * - on construction of the map, check to see if complement is already included, in which case the pair has been found
+        * time: O(n)
+        * space: O(n) because hash map may approach the size of nums
+        */
+    twoSum(nums, target) {
+        const complementsMap = new Map();
+        const numLength = nums.length;
+        for (let i = 0; i < numLength; i++) {
+            const complement = target - nums[i];
+            if (complementsMap.has(complement)) {
+                // if this succeeded, this was from a prior member of nums, so it's index is guaranteed to be less than i
+                return [complementsMap.get(complement), i];
+            } else {
+                // save the current member because it's complement may show up later
+                complementsMap.set(nums[i], i);
+            }
+        }
+    }
+}
+
