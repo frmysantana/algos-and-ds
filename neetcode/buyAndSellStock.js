@@ -21,7 +21,6 @@
  * 1 <= prices.length <= 100
  * 0 <= prices[i] <= 100
  */
-
 class Solution {
     /**
      * @param {number[]} prices
@@ -29,6 +28,7 @@ class Solution {
      */
 
     /**
+     * TODO: try again; solution isn't optimal
      * time: O(n^2)
      * space: O(1)
      */
