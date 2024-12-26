@@ -50,6 +50,42 @@ class Solution {
 
         return stack.length == 0;
     }
+
+    /* 
+     * 
+     * better, self-contained implementation
+     * - if s is odd, fail fast
+     * - if stack.length > s.length/2, fail fast
+     */
+    isValidV2(s) {
+        if (s.length % 2 == 1) return false;
+
+        const stack = [];
+
+        for (let i = 0; i < s.length; i++) {
+            if ('([{'.indexOf(s[i]) > -1) {
+                stack.push(s[i]);
+            } else {
+                if (s[i] == ')' && stack[stack.length -1] != '(') {
+                    return false;
+                }
+                if (s[i] == ']' && stack[stack.length -1] != '[') {
+                    return false;
+                }
+                if (s[i] == '}' && stack[stack.length -1] != '{') {
+                    return false;
+                }
+
+                stack.pop();
+            }
+
+            if (stack.length > s.length/2) {
+                return false;
+            }
+        }
+
+        return stack.length == 0;
+    }
 }
 
 // as a function
