@@ -45,4 +45,31 @@ class Solution {
 
         return profit;
     }
+
+    /**
+     * 2nd attempt: more efficient
+     * 
+     * want max profit only
+     * use two pointers to compare every pair of low-to-high values during the same loop
+     * left < right ? take diff and compare to max; keep the bigger
+     * left >= right ? change left pointer to equal right and increment right (want left to be as small as possible)
+     * time: O(n); space: O(1)
+     */
+    maxProfitV2(prices) {
+        let profit = 0;
+        let left = 0;
+        let right = 1;
+        for (let i = 0; i < prices.length; i++) {
+            if (prices[left] < prices[right]) {
+                const diff = prices[right] - prices[left];
+                profit = diff > profit ? diff : profit;
+            } else {
+                left = right;
+            }
+
+            right++;
+        }
+
+        return profit
+    }
 }
