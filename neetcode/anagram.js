@@ -36,4 +36,38 @@ class Solution {
             return acc
         }, {})
     }
+
+    /**
+     * other implementation needing only 1 map
+     * 
+     * time: O(n) where n is size of the larger string
+     * space: O(s) where s is size of string s
+     */
+    isAnagramV2(s, t) {
+        if (s.length !== t.length) return false;
+
+        const map = getMap(s);
+
+        for (const c of t) {
+            const count = map.get(c) ?? 0;
+
+            // if t has letter that s doesn't this will trigger
+            // if t has higher frequency of a letter than s, this will also trigger
+            if (count === 0) return false;
+            map.set(c, count - 1);
+        }
+
+        return true;
+    }
+
+    getMap(string) {
+        const map = new Map();
+
+        for (const s of string) {
+            const count = map.get(s) ?? 0;
+            map.set(s, count + 1);
+        }
+
+        return map;
+    }
 }
